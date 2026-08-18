@@ -7,6 +7,7 @@ Researcher: Karan Parelkar
 **Executive Summary:**
 
 During an security assessment of the open-source Matrimonial System IN PHP, CSS, JS, AND MYSQL published on code-projects.org, a critical SQL Injection vulnerability was identified in  the Regular search functionality. 
+
 The vulnerability exists because user-controlled input from the sex parameter is  concatenated directly into an SQL query without server-side sanitization or parameterized  statements. 
 Successful exploitation allows an attacker to: 
 • Execute arbitrary SQL queries  
@@ -35,13 +36,12 @@ A03:2021 – Injection
 
 **Vulnerability Details**
 
-Vulnerable Endpoint 
-POST /search.php
+Vulnerable Endpoint: POST /search.php
 
-Vulnerable Parameter 
-sex
+Vulnerable Parameter: sex
 
 Root Cause 
+
 The application constructs SQL statements by directly concatenating user-supplied values into SQL queries.
 The vulnerable code is located in functions.php, inside the search() function (called by search.php):
 
