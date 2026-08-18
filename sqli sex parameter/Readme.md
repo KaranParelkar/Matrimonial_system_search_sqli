@@ -76,7 +76,7 @@ Step 1 – search page
 
 The vulnerable Regular search form accepts a user-controlled sex parameter.
 
-
+![POC](images/sqli para.png)
  
 Step 2 – Vulnerable Source Code 
 
