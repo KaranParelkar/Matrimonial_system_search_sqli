@@ -15,7 +15,7 @@ Successful exploitation allows an attacker to:
 
 Testing was performed only against a locally deployed instance for research purposes. 
 
-**Affected Product **
+**Affected Product**
 
 Item Details 
 Matrimonial System IN PHP, CSS, JS, AND MYSQL
@@ -26,13 +26,13 @@ Database: MySQL
 Server: Apache 
 Operating System Windows (XAMPP Test Environment)
 
-**Vulnerability Classification **
+**Vulnerability Classification**
 
 CWE-89 
 Improper Neutralization of Special Elements used in an SQL Command (SQL Injection) OWASP Top 10 
 A03:2021 – Injection 
 
-**Vulnerability Details **
+**Vulnerability Details**
 
 Vulnerable Endpoint 
 POST /search.php
@@ -44,6 +44,7 @@ Root Cause
 The application constructs SQL statements by directly concatenating user-supplied values into SQL queries.
 The vulnerable code is located in functions.php, inside the search() function (called by search.php):
 
+```javascript
 $sex = $_POST['sex'];
 $agemin = $_POST['agemin'];
 $agemax = $_POST['agemax'];
@@ -63,11 +64,12 @@ AND state = '$state'
 AND religion = '$religion'
 AND mothertounge = '$mothertounge'
 ";
-
 $result = mysqlexec($sql);
+```
+
 Because no parameterized query or escaping mechanism is used, arbitrary SQL statements can be injected via the sex parameter. The mysqlexec() function executes the query directly via mysqli_query() with no sanitization applied at any layer, allowing the injected payload to reach the database unfiltered.
 
-**Proof of Concept **
+**Proof of Concept**
 
 Step 1 – search page 
 
@@ -95,7 +97,7 @@ Step 4 – SQLMap Verification
 
 The captured request was supplied to SQLMap. 
 command: 
- python .\sqlmap.py -r .\code_test_1.txt --batch --dbs
+ ```python python .\sqlmap.py -r .\code_test_1.txt --batch --dbs ```
 SQLMap confirmed that the sex parameter is injectable using: 
 • Boolean-based Blind SQL Injection  
 • Error-based SQL Injection  
@@ -117,19 +119,19 @@ Credential Disclosure
 
 The vulnerable SQL Injection allowed extraction of user records from the application's  database.
 command: 
-python .\sqlmap.py -r .\code_test_1.txt --batch -D matrimony -T users --dump
+```python python .\sqlmap.py -r .\code_test_1.txt --batch -D matrimony -T users --dump ```
 
 
 The following sensitive information was retrieved: 
 • Usernames  
 • Passwords  
 • User Level
-•  email
+• email
 • date of birth
 • gender
 
 
-**Impact **
+**Impact**
 Successful exploitation may allow an attacker to: 
 • Execute arbitrary SQL statements  
 • Enumerate databases  
@@ -141,7 +143,7 @@ Base Score
 9.8 (Critical) 
 CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
-**Remediation **
+**Remediation**
 
 Developers should: 
 • Replace dynamic SQL with prepared statements.  
@@ -152,10 +154,11 @@ Developers should:
 
 
 
-**Secure Coding Example **
+**Secure Coding Example**
 
 Vulnerable Code:
 
+```javascript
 function search(){
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $agemin=$_POST['agemin'];
@@ -180,11 +183,13 @@ function search(){
     return $result;
   }
 }
+```
 
 
 
 Secure code:
 
+```javascript
 function search(){
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $agemin        = $_POST['agemin'];
@@ -231,9 +236,10 @@ function search(){
     return $result;
   }
 }
+```
 
 
-**References **
+**References**
 
 • Product Inventory System in PHP (code-projects.org) (https://code-projects.org/matrimonial-system-in-php-css-js-and-mysql-free-download/) 
 • CWE-89 – SQL Injection  
@@ -241,7 +247,7 @@ function search(){
 • OWASP Top 10 2021 – Injection  
 
 
-**Researcher Information **
+**Researcher Information**
 
 Name: Karan Parelkar 
 Independent Security Researcher 
