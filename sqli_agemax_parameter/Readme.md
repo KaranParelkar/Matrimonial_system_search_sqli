@@ -89,6 +89,11 @@ The ‘ in parameter leads to MySQL error confirming SQL injection
 ![POC](images/sqli%20error%201.png)
 ![POC](images/sqli%20error%202.png)
 
+Step 2 – Vulnerable Source Code 
+
+The search function directly embeds POST parameters into the SQL query. 
+![POC](images/vulnerable%20code.png)
+
 Step 3 – Manual SQL Injection 
 The intercepted POST request was modified by injecting a time-based SQL payload into the  agemax parameter. 
 
