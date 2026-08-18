@@ -77,7 +77,7 @@ The search function directly embeds POST parameters into the SQL query.
 ![POC](images/vulnerable%20code.png)
 
 The ‘ in parameter leads to MySQL error confirming SQL injection 
-![POC](images/sqli%20error.png)
+![POC](images/sqli_error.png)
 
 Step 3 – Manual SQL Injection 
 
@@ -104,8 +104,10 @@ SQLMap confirmed that the maritalstatus parameter is injectable using:
 Database Enumeration 
 
 Using SQLMap, multiple databases were successfully enumerated. 
-![POC](images/sqli%202.png)
+
 ![POC](images/sqli%202%20half.png)
+![POC](images/sqli%202.png)
+
 
 information_schema 
 matrimony
