@@ -75,7 +75,7 @@ Step 1 – search page
 
 The vulnerable Regular search form accepts a user-controlled maritalstatus parameter.
 
-![POC](images/sqli%2para.png)
+![POC](images/sqli%20para.png)
 
 
 Step 2 – Vulnerable Source Code 
