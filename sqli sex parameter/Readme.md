@@ -87,7 +87,7 @@ The search function directly embeds POST parameters into the SQL query.
 
 The ‘ in parameter leads to MySQL error confirming SQL injection 
 
-![POC](images/sqli%20erro.png)
+![POC](images/sqli_error.png)
 
 Step 3 – Manual SQL Injection 
 
